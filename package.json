@@ -10,21 +10,21 @@
     "sanity": "sanity dev"
   },
   "dependencies": {
-    "@sanity/client": "^6.28.2",
-    "next": "^15.2.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "sanity": "^3.74.0"
+    "@sanity/client": "^6.29.1",
+    "next": "^15.5.16",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "sanity": "^3.99.0"
   },
   "devDependencies": {
-    "@types/node": "^22.10.0",
+    "@types/node": "^22.19.17",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "autoprefixer": "^10.4.21",
-    "eslint": "^9.18.0",
-    "eslint-config-next": "^15.2.0",
-    "postcss": "^8.5.1",
-    "tailwindcss": "^3.4.17",
-    "typescript": "^5.7.3"
+    "eslint": "^9.39.4",
+    "eslint-config-next": "^15.5.16",
+    "postcss": "^8.5.14",
+    "tailwindcss": "^3.4.19",
+    "typescript": "^5.9.3"
   }
 }
