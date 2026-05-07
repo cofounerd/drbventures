@@ -3,20 +3,9 @@
 import Image from 'next/image';
 import { type FormEvent, useEffect, useState } from 'react';
 
-const paymentOptions = [
-  {
-    name: 'Zelle',
-    detail: 'DRBUTLERVENTURES@GMAIL.COM',
-    image: '/assets/zelle-qr.jpeg',
-    alt: 'Zelle QR code for DR Butler Ventures'
-  },
-  {
-    name: 'Cash App',
-    detail: '$DRButlerVentures',
-    image: '/assets/cashapp-qr.png',
-    alt: 'Cash App QR code for Duane Butler'
-  }
-];
+const bookPrice = '$21.99';
+const cashAppLink = 'https://cash.app/$DRButlerVentures/21.99';
+const cashAppQrImage = '/assets/cashapp-qr-2199.png';
 
 const inputClass =
   'w-full border border-ink/15 bg-white px-4 py-3 text-sm text-ink outline-none transition placeholder:text-charcoal/42 focus:border-teal focus:ring-2 focus:ring-teal/15';
@@ -93,7 +82,7 @@ export function OrderBookForm() {
                   Complete Your Order
                 </h3>
                 <p className="mt-2 max-w-2xl text-sm leading-6 text-charcoal">
-                  Scan either payment QR code below. After payment, DRB Ventures will use your order details for fulfillment.
+                  Pay {bookPrice} with Cash App to complete your book order. After payment, DRB Ventures will use your order details for fulfillment.
                 </p>
               </div>
               <button
@@ -108,20 +97,30 @@ export function OrderBookForm() {
               </button>
             </div>
 
-            <div className="mt-6 grid gap-6 md:grid-cols-2">
-              {paymentOptions.map((option) => (
-                <section key={option.name} className="border border-ink/10 bg-[#fbfaf8] p-4 sm:p-5">
-                  <div className="flex items-baseline justify-between gap-4">
-                    <h4 className="font-display text-3xl text-ink">{option.name}</h4>
-                    <p className="text-xs font-bold uppercase tracking-[0.12em] text-gold">Scan to pay</p>
-                  </div>
-                  <p className="mt-1 break-words text-sm font-semibold text-charcoal">{option.detail}</p>
-                  <div className="mt-4 bg-white p-3">
-                    <Image src={option.image} alt={option.alt} width={1139} height={1474} className="h-auto w-full" />
-                  </div>
-                </section>
-              ))}
-            </div>
+            <section className="mx-auto mt-6 max-w-xl border border-ink/10 bg-[#fbfaf8] p-4 sm:p-5">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <h4 className="font-display text-3xl text-ink">Cash App</h4>
+                  <p className="mt-1 break-words text-sm font-semibold text-charcoal">$DRButlerVentures</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-xs font-bold uppercase tracking-[0.12em] text-gold">Amount due</p>
+                  <p className="mt-1 font-display text-4xl leading-none text-teal">{bookPrice}</p>
+                </div>
+              </div>
+              <a
+                href={cashAppLink}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-5 block bg-white p-3 transition hover:opacity-90"
+                aria-label={`Pay ${bookPrice} with Cash App`}
+              >
+                <Image src={cashAppQrImage} alt={`Cash App QR code for ${bookPrice} book payment`} width={720} height={720} className="h-auto w-full" />
+              </a>
+              <p className="mt-4 text-center text-sm leading-6 text-charcoal">
+                Scan the QR code or tap it to open Cash App with the {bookPrice} payment amount.
+              </p>
+            </section>
           </div>
         </div>
       ) : null}
