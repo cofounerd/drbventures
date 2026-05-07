@@ -6,6 +6,8 @@ node_modules
 ~$*.pptx
 *.log
 *.env
+.env.local
+.env.*.local
 build
 coverage
 *.zip
@@ -14,4 +16,3 @@ coverage
 *.tmp
 .idea
 .vscode
-

@@ -50,6 +50,6 @@ export async function POST(request: Request) {
   }
 
   return NextResponse.json({
-    message: 'You are on the launch list.'
+    message: 'Check your inbox to confirm your subscription.'
   });
 }
