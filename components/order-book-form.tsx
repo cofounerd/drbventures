@@ -122,6 +122,8 @@ export function OrderBookForm() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedState, setSelectedState] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [message, setMessage] = useState('');
 
   const cityOptions = selectedState ? [...(cityOptionsByState[selectedState] ?? []), 'Other'] : [];
 
@@ -145,9 +147,48 @@ export function OrderBookForm() {
     };
   }, [isModalOpen]);
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setIsModalOpen(true);
+    setStatus('loading');
+    setMessage('');
+
+    const formData = new FormData(event.currentTarget);
+    const citySelection = formData.get('city')?.toString().trim() || '';
+    const customCity = formData.get('customCity')?.toString().trim() || '';
+    const city = citySelection === 'Other' ? customCity : citySelection;
+
+    try {
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          source: 'order-book',
+          firstName: formData.get('firstName')?.toString().trim(),
+          lastName: formData.get('lastName')?.toString().trim(),
+          address: formData.get('address')?.toString().trim(),
+          city,
+          state: formData.get('state')?.toString().trim(),
+          zipCode: formData.get('zipCode')?.toString().trim(),
+          phone: formData.get('phone')?.toString().trim(),
+          email: formData.get('email')?.toString().trim()
+        })
+      });
+
+      const payload = (await response.json()) as { message?: string };
+
+      if (!response.ok) {
+        throw new Error(payload.message || 'Unable to submit your order details.');
+      }
+
+      setStatus('success');
+      setMessage(payload.message || 'Order details received. Opening purchase details.');
+      setIsModalOpen(true);
+    } catch (error) {
+      setStatus('error');
+      setMessage(error instanceof Error ? error.message : 'Something went wrong.');
+    }
   }
 
   return (
@@ -234,9 +275,15 @@ export function OrderBookForm() {
           </label>
         </div>
 
-        <button type="submit" className="mt-2 bg-teal px-7 py-4 text-sm font-bold uppercase tracking-[0.08em] text-white transition hover:bg-ink">
-          Order
+        <button
+          type="submit"
+          disabled={status === 'loading'}
+          className="mt-2 bg-teal px-7 py-4 text-sm font-bold uppercase tracking-[0.08em] text-white transition hover:bg-ink disabled:cursor-not-allowed disabled:opacity-70"
+        >
+          {status === 'loading' ? 'Submitting...' : 'Order'}
         </button>
+
+        <p className={`min-h-[1.5rem] text-sm ${status === 'error' ? 'text-red-700' : 'text-ink/70'}`}>{message}</p>
       </form>
 
       {isModalOpen ? (
