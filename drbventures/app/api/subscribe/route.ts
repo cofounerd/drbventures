@@ -3,6 +3,12 @@ import { NextResponse } from 'next/server';
 type SubscribePayload = {
   email?: string;
   firstName?: string;
+  lastName?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
+  phone?: string;
   source?: string;
 };
 
@@ -10,6 +16,12 @@ export async function POST(request: Request) {
   const body = (await request.json()) as SubscribePayload;
   const email = body.email?.trim();
   const firstName = body.firstName?.trim();
+  const lastName = body.lastName?.trim();
+  const address = body.address?.trim();
+  const city = body.city?.trim();
+  const state = body.state?.trim();
+  const zipCode = body.zipCode?.trim();
+  const phone = body.phone?.trim();
   const source = body.source?.trim() || 'homepage';
 
   if (!email) {
@@ -25,22 +37,46 @@ export async function POST(request: Request) {
     });
   }
 
-  const response = await fetch(`https://api.convertkit.com/v3/forms/${formId}/subscribe`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8'
-    },
-    body: JSON.stringify({
-      api_key: apiKey,
-      email,
-      first_name: firstName,
-      fields: {
-        source
-      }
-    })
-  });
+  const subscribe = async (fields: Record<string, string>) => {
+    const response = await fetch(`https://api.convertkit.com/v3/forms/${formId}/subscribe`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+      body: JSON.stringify({
+        api_key: apiKey,
+        email,
+        first_name: firstName,
+        fields
+      })
+    });
 
-  const data = (await response.json()) as { message?: string };
+    const data = (await response.json()) as { message?: string };
+
+    return { response, data };
+  };
+
+  const fullFields = Object.entries({
+    source,
+    last_name: lastName,
+    address,
+    city,
+    state,
+    zip_code: zipCode,
+    phone
+  }).reduce<Record<string, string>>((accumulator, [key, value]) => {
+    if (value) {
+      accumulator[key] = value;
+    }
+
+    return accumulator;
+  }, {});
+
+  let { response, data } = await subscribe(fullFields);
+
+  if (!response.ok && Object.keys(fullFields).length > 1) {
+    ({ response, data } = await subscribe({ source }));
+  }
 
   if (!response.ok) {
     return NextResponse.json(
@@ -50,6 +86,6 @@ export async function POST(request: Request) {
   }
 
   return NextResponse.json({
-    message: 'Check your inbox to confirm your subscription.'
+    message: source === 'order-book' ? 'Order details received. Opening purchase details.' : 'Check your inbox to confirm your subscription.'
   });
 }
