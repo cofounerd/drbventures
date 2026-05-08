@@ -6,12 +6,124 @@ import { type FormEvent, useEffect, useState } from 'react';
 const bookPrice = '$21.99';
 const cashAppLink = 'https://cash.app/$DRButlerVentures/21.99';
 const cashAppQrImage = '/assets/cashapp-qr-2199.png';
+const states = [
+  { code: 'AL', name: 'Alabama' },
+  { code: 'AK', name: 'Alaska' },
+  { code: 'AZ', name: 'Arizona' },
+  { code: 'AR', name: 'Arkansas' },
+  { code: 'CA', name: 'California' },
+  { code: 'CO', name: 'Colorado' },
+  { code: 'CT', name: 'Connecticut' },
+  { code: 'DE', name: 'Delaware' },
+  { code: 'FL', name: 'Florida' },
+  { code: 'GA', name: 'Georgia' },
+  { code: 'HI', name: 'Hawaii' },
+  { code: 'ID', name: 'Idaho' },
+  { code: 'IL', name: 'Illinois' },
+  { code: 'IN', name: 'Indiana' },
+  { code: 'IA', name: 'Iowa' },
+  { code: 'KS', name: 'Kansas' },
+  { code: 'KY', name: 'Kentucky' },
+  { code: 'LA', name: 'Louisiana' },
+  { code: 'ME', name: 'Maine' },
+  { code: 'MD', name: 'Maryland' },
+  { code: 'MA', name: 'Massachusetts' },
+  { code: 'MI', name: 'Michigan' },
+  { code: 'MN', name: 'Minnesota' },
+  { code: 'MS', name: 'Mississippi' },
+  { code: 'MO', name: 'Missouri' },
+  { code: 'MT', name: 'Montana' },
+  { code: 'NE', name: 'Nebraska' },
+  { code: 'NV', name: 'Nevada' },
+  { code: 'NH', name: 'New Hampshire' },
+  { code: 'NJ', name: 'New Jersey' },
+  { code: 'NM', name: 'New Mexico' },
+  { code: 'NY', name: 'New York' },
+  { code: 'NC', name: 'North Carolina' },
+  { code: 'ND', name: 'North Dakota' },
+  { code: 'OH', name: 'Ohio' },
+  { code: 'OK', name: 'Oklahoma' },
+  { code: 'OR', name: 'Oregon' },
+  { code: 'PA', name: 'Pennsylvania' },
+  { code: 'RI', name: 'Rhode Island' },
+  { code: 'SC', name: 'South Carolina' },
+  { code: 'SD', name: 'South Dakota' },
+  { code: 'TN', name: 'Tennessee' },
+  { code: 'TX', name: 'Texas' },
+  { code: 'UT', name: 'Utah' },
+  { code: 'VT', name: 'Vermont' },
+  { code: 'VA', name: 'Virginia' },
+  { code: 'WA', name: 'Washington' },
+  { code: 'WV', name: 'West Virginia' },
+  { code: 'WI', name: 'Wisconsin' },
+  { code: 'WY', name: 'Wyoming' },
+  { code: 'DC', name: 'District of Columbia' }
+] as const;
+
+const cityOptionsByState: Record<string, string[]> = {
+  AL: ['Birmingham', 'Montgomery', 'Huntsville', 'Mobile'],
+  AK: ['Anchorage', 'Fairbanks', 'Juneau', 'Wasilla'],
+  AZ: ['Phoenix', 'Tucson', 'Mesa', 'Scottsdale'],
+  AR: ['Little Rock', 'Fort Smith', 'Fayetteville', 'Jonesboro'],
+  CA: ['Los Angeles', 'San Diego', 'San Jose', 'San Francisco'],
+  CO: ['Denver', 'Colorado Springs', 'Aurora', 'Fort Collins'],
+  CT: ['Bridgeport', 'New Haven', 'Hartford', 'Stamford'],
+  DE: ['Wilmington', 'Dover', 'Newark', 'Middletown'],
+  FL: ['Jacksonville', 'Miami', 'Tampa', 'Orlando'],
+  GA: ['Atlanta', 'Augusta', 'Savannah', 'Columbus'],
+  HI: ['Honolulu', 'Hilo', 'Kailua', 'Pearl City'],
+  ID: ['Boise', 'Meridian', 'Nampa', 'Idaho Falls'],
+  IL: ['Chicago', 'Aurora', 'Naperville', 'Springfield'],
+  IN: ['Indianapolis', 'Fort Wayne', 'Evansville', 'South Bend'],
+  IA: ['Des Moines', 'Cedar Rapids', 'Davenport', 'Sioux City'],
+  KS: ['Wichita', 'Overland Park', 'Kansas City', 'Topeka'],
+  KY: ['Louisville', 'Lexington', 'Bowling Green', 'Owensboro'],
+  LA: ['New Orleans', 'Baton Rouge', 'Shreveport', 'Lafayette'],
+  ME: ['Portland', 'Lewiston', 'Bangor', 'South Portland'],
+  MD: ['Baltimore', 'Annapolis', 'Frederick', 'Rockville'],
+  MA: ['Boston', 'Worcester', 'Springfield', 'Cambridge'],
+  MI: ['Detroit', 'Grand Rapids', 'Warren', 'Lansing'],
+  MN: ['Minneapolis', 'Saint Paul', 'Rochester', 'Duluth'],
+  MS: ['Jackson', 'Gulfport', 'Southaven', 'Hattiesburg'],
+  MO: ['Kansas City', 'Saint Louis', 'Springfield', 'Columbia'],
+  MT: ['Billings', 'Missoula', 'Great Falls', 'Bozeman'],
+  NE: ['Omaha', 'Lincoln', 'Bellevue', 'Grand Island'],
+  NV: ['Las Vegas', 'Henderson', 'Reno', 'North Las Vegas'],
+  NH: ['Manchester', 'Nashua', 'Concord', 'Dover'],
+  NJ: ['Newark', 'Jersey City', 'Paterson', 'Elizabeth'],
+  NM: ['Albuquerque', 'Las Cruces', 'Rio Rancho', 'Santa Fe'],
+  NY: ['New York City', 'Buffalo', 'Rochester', 'Albany'],
+  NC: ['Charlotte', 'Raleigh', 'Greensboro', 'Durham'],
+  ND: ['Fargo', 'Bismarck', 'Grand Forks', 'Minot'],
+  OH: ['Columbus', 'Cleveland', 'Cincinnati', 'Toledo'],
+  OK: ['Oklahoma City', 'Tulsa', 'Norman', 'Broken Arrow'],
+  OR: ['Portland', 'Eugene', 'Salem', 'Gresham'],
+  PA: ['Philadelphia', 'Pittsburgh', 'Allentown', 'Harrisburg'],
+  RI: ['Providence', 'Warwick', 'Cranston', 'Pawtucket'],
+  SC: ['Charleston', 'Columbia', 'North Charleston', 'Greenville'],
+  SD: ['Sioux Falls', 'Rapid City', 'Aberdeen', 'Brookings'],
+  TN: ['Nashville', 'Memphis', 'Knoxville', 'Chattanooga'],
+  TX: ['Houston', 'Dallas', 'Austin', 'San Antonio'],
+  UT: ['Salt Lake City', 'West Valley City', 'Provo', 'Ogden'],
+  VT: ['Burlington', 'South Burlington', 'Rutland', 'Montpelier'],
+  VA: ['Virginia Beach', 'Richmond', 'Norfolk', 'Alexandria'],
+  WA: ['Seattle', 'Spokane', 'Tacoma', 'Vancouver'],
+  WV: ['Charleston', 'Huntington', 'Morgantown', 'Parkersburg'],
+  WI: ['Milwaukee', 'Madison', 'Green Bay', 'Kenosha'],
+  WY: ['Cheyenne', 'Casper', 'Laramie', 'Gillette'],
+  DC: ['Washington']
+};
 
 const inputClass =
   'w-full border border-ink/15 bg-white px-4 py-3 text-sm text-ink outline-none transition placeholder:text-charcoal/42 focus:border-teal focus:ring-2 focus:ring-teal/15';
+const selectClass = `${inputClass} appearance-none`;
 
 export function OrderBookForm() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedState, setSelectedState] = useState('');
+  const [selectedCity, setSelectedCity] = useState('');
+
+  const cityOptions = selectedState ? [...(cityOptionsByState[selectedState] ?? []), 'Other'] : [];
 
   useEffect(() => {
     if (!isModalOpen) {
@@ -54,8 +166,62 @@ export function OrderBookForm() {
 
         <label>
           <span className="mb-2 block text-xs font-bold uppercase tracking-[0.16em] text-charcoal/70">Address</span>
-          <textarea className={`${inputClass} min-h-28 resize-y`} name="address" autoComplete="street-address" required placeholder="Shipping address" />
+          <input className={inputClass} name="address" autoComplete="address-line1" required placeholder="Street address" />
         </label>
+
+        <div className="grid gap-4 sm:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)_minmax(0,0.7fr)]">
+          <label>
+            <span className="mb-2 block text-xs font-bold uppercase tracking-[0.16em] text-charcoal/70">City</span>
+            <select
+              className={selectClass}
+              name="city"
+              autoComplete="address-level2"
+              required
+              value={selectedCity}
+              onChange={(event) => setSelectedCity(event.target.value)}
+              disabled={!selectedState}
+            >
+              <option value="">{selectedState ? 'Select city' : 'Select state first'}</option>
+              {cityOptions.map((city) => (
+                <option key={city} value={city}>
+                  {city}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            <span className="mb-2 block text-xs font-bold uppercase tracking-[0.16em] text-charcoal/70">State</span>
+            <select
+              className={selectClass}
+              name="state"
+              autoComplete="address-level1"
+              required
+              value={selectedState}
+              onChange={(event) => {
+                setSelectedState(event.target.value);
+                setSelectedCity('');
+              }}
+            >
+              <option value="">Select state</option>
+              {states.map((state) => (
+                <option key={state.code} value={state.code}>
+                  {state.name}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            <span className="mb-2 block text-xs font-bold uppercase tracking-[0.16em] text-charcoal/70">Zip code</span>
+            <input className={inputClass} name="zipCode" autoComplete="postal-code" required placeholder="Zip code" />
+          </label>
+        </div>
+
+        {selectedCity === 'Other' ? (
+          <label>
+            <span className="mb-2 block text-xs font-bold uppercase tracking-[0.16em] text-charcoal/70">Custom city</span>
+            <input className={inputClass} name="customCity" autoComplete="address-level2" required placeholder="Enter your city" />
+          </label>
+        ) : null}
 
         <div className="grid gap-4 sm:grid-cols-2">
           <label>
