@@ -3,9 +3,9 @@
 import Image from 'next/image';
 import { type FormEvent, useEffect, useState } from 'react';
 
-const bookPrice = '$21.99';
-const cashAppLink = 'https://cash.app/$DRButlerVentures/21.99';
-const cashAppQrImage = '/assets/cashapp-qr-2199.png';
+const buyNowLink = 'https://shop.ingramspark.com/b/084?params=IeEVe6YMZEur45jiDrmlfWr8ASYvWTeXtiotHuE2TKt';
+const bookCoverImage =
+  'https://image-hub-cloud.lightningsource.com/2011-04-01/Images/front_cover/x200/sku/195971970X.jpg?viewkey=22c8cf30e29d2c48d36eb216f312767f3bdf7a7cefb4e63340c8109885f4c580';
 const states = [
   { code: 'AL', name: 'Alabama' },
   { code: 'AK', name: 'Alaska' },
@@ -248,7 +248,7 @@ export function OrderBookForm() {
                   Complete Your Order
                 </h3>
                 <p className="mt-2 max-w-2xl text-sm leading-6 text-charcoal">
-                  Pay {bookPrice} with Cash App to complete your book order. After payment, DRB Ventures will use your order details for fulfillment.
+                  Your order details are ready. Use the purchase link below to complete checkout for <span className="italic">Choosing Joy</span>.
                 </p>
               </div>
               <button
@@ -264,27 +264,34 @@ export function OrderBookForm() {
             </div>
 
             <section className="mx-auto mt-6 max-w-xl border border-ink/10 bg-[#fbfaf8] p-4 sm:p-5">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <h4 className="font-display text-3xl text-ink">Cash App</h4>
-                  <p className="mt-1 break-words text-sm font-semibold text-charcoal">$DRButlerVentures</p>
+              <div className="flex flex-col gap-5 sm:flex-row sm:items-start">
+                <div className="w-full shrink-0 sm:w-32">
+                  <Image
+                    src={bookCoverImage}
+                    alt="Choosing Joy book cover"
+                    width={200}
+                    height={300}
+                    className="h-auto w-full border border-ink/10 object-cover shadow-sm"
+                  />
                 </div>
-                <div className="text-right">
-                  <p className="text-xs font-bold uppercase tracking-[0.12em] text-gold">Amount due</p>
-                  <p className="mt-1 font-display text-4xl leading-none text-teal">{bookPrice}</p>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-gold">Book Order</p>
+                  <h4 className="mt-2 text-left text-lg font-bold leading-6 text-ink sm:text-xl">
+                    CHOOSING JOY: How to Navigate Pain, Get Unstuck, and Reclaim Your Life
+                  </h4>
+                  <p className="mt-2 text-left text-sm italic leading-6 text-charcoal">BUTLER, DUANE R.</p>
+                  <a
+                    href={buyNowLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-4 inline-flex min-h-11 items-center justify-center rounded-md bg-gold px-6 py-3 text-sm font-bold text-ink transition hover:bg-teal hover:text-white"
+                  >
+                    Buy Now
+                  </a>
                 </div>
               </div>
-              <a
-                href={cashAppLink}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-5 block bg-white p-3 transition hover:opacity-90"
-                aria-label={`Pay ${bookPrice} with Cash App`}
-              >
-                <Image src={cashAppQrImage} alt={`Cash App QR code for ${bookPrice} book payment`} width={720} height={720} className="h-auto w-full" />
-              </a>
-              <p className="mt-4 text-center text-sm leading-6 text-charcoal">
-                Scan the QR code or tap it to open Cash App with the {bookPrice} payment amount.
+              <p className="mt-4 text-sm leading-6 text-charcoal">
+                The order button opens the official purchase page in a new tab so you can finish checkout and submit payment there.
               </p>
             </section>
           </div>
