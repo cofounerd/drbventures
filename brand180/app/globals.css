@@ -360,11 +360,11 @@ h2 {
 }
 
 .feature-list article {
+  border-bottom: 1px solid var(--line);
   display: grid;
   gap: 22px;
   grid-template-columns: minmax(170px, 0.58fr) minmax(240px, 1fr);
   padding: 28px 0;
-  border-bottom: 1px solid var(--line);
 }
 
 h3 {
@@ -661,8 +661,8 @@ h3 {
 
   .split-feature {
     grid-template-columns: 1fr;
-    padding-top: 78px;
     padding-bottom: 78px;
+    padding-top: 78px;
   }
 
   .feature-list {
@@ -684,8 +684,8 @@ h3 {
   }
 
   .principles {
-    padding-top: 78px;
     padding-bottom: 78px;
+    padding-top: 78px;
   }
 
   .principle-grid {
@@ -702,5 +702,4 @@ h3 {
     padding-bottom: 42px;
     padding-top: 78px;
   }
-
 }

@@ -1,6 +1,6 @@
 # Brand180
 
-Brand180 is a static creative technology site built around the positioning:
+Brand180 is a Next.js App Router site built around the positioning:
 
 > Creative Output Fuels Imagination
 
@@ -12,29 +12,32 @@ direction.
 
 ```text
 brand180/
-  index.html   Main site markup
-  styles.css   Visual system, layout, and responsive styles
-  script.js    Lightweight hero interaction and rotating signal text
+  app/
+    layout.tsx        Root metadata and document shell
+    page.tsx          Brand180 landing page
+    signal-stage.tsx  Client-side hero interaction
+    globals.css       Visual system, layout, and responsive styles
+  package.json        Next.js scripts and dependencies
 ```
 
 ## Running Locally
 
-This site is dependency-free. Open `index.html` directly in a browser:
-
-```text
-file:///Users/keithhutchinson/Desktop/CoFo/brand180/index.html
-```
-
-For a local server:
+Install dependencies:
 
 ```bash
-python3 -m http.server 8000
+npm install
+```
+
+Start the development server:
+
+```bash
+npm run dev
 ```
 
 Then visit:
 
 ```text
-http://localhost:8000
+http://localhost:3000
 ```
 
 ## Design Direction
@@ -50,5 +53,8 @@ grids and creative studio portfolios. The current visual system emphasizes:
 
 ## Deployment
 
-Because the site is static, it can be deployed to any static host, including
-GitHub Pages, Vercel, Netlify, or a simple web server.
+The app can be deployed to Vercel or any host that supports Next.js. Build with:
+
+```bash
+npm run build
+```
