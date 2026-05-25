@@ -177,8 +177,8 @@ export default function Home() {
               Build the system behind the next creative leap.
             </h2>
           </div>
-          <a href="mailto:hello@brand180.co" className="contact-link">
-            hello@brand180.co
+          <a href="mailto:Hello@brand180.com" className="contact-link">
+            Hello@brand180.com
           </a>
         </section>
       </main>
