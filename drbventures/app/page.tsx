@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { NewsletterForm } from '@/components/newsletter-form';
 import { OrderBookForm } from '@/components/order-book-form';
 import { getLandingPageContent } from '@/lib/sanity';
 
@@ -10,14 +9,6 @@ const heroImage = '/assets/image.png';
 const collageImage = '/assets/image (1).png';
 const portraitImage = '/assets/image (2).png';
 const logoImage = '/assets/logo.png';
-
-const milestones = [
-  { label: 'Writing', status: 'Complete', active: true },
-  { label: 'Editing', status: 'In progress', active: true },
-  { label: 'Design', status: 'In progress', active: true },
-  { label: 'Publishing', status: 'Coming soon', active: true },
-  { label: 'Launch', status: 'Coming soon', active: true }
-];
 
 const quotes = [
   {
@@ -50,9 +41,6 @@ export default async function HomePage() {
       <header className="sticky top-0 z-40 border-b border-ink/10 bg-white/92 backdrop-blur">
         <div className="mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-4 px-5 py-4 sm:px-8 lg:px-10">
           <nav aria-label="Primary left" className="hidden items-center gap-9 text-sm font-medium text-ink/80 md:flex">
-            <a href="#books" className="transition hover:text-teal">
-              Books
-            </a>
             <a href="#about" className="transition hover:text-teal">
               About
             </a>
@@ -66,9 +54,6 @@ export default async function HomePage() {
             <a href="#movement" className="transition hover:text-teal">
               Movement
             </a>
-            <a href="#updates" className="transition hover:text-teal">
-              Updates
-            </a>
             <a href="#order" className="transition hover:text-teal">
               Order
             </a>
@@ -78,15 +63,15 @@ export default async function HomePage() {
           </nav>
 
           <a
-            href="#updates"
+            href="#order"
             className="col-start-3 justify-self-end border border-teal px-4 py-2 text-xs font-bold uppercase tracking-[0.08em] text-teal transition hover:bg-teal hover:text-white md:hidden"
           >
-            Updates
+            Order
           </a>
         </div>
       </header>
 
-      <section id="top" className="relative overflow-hidden border-b border-ink/10">
+      <section id="top" className="relative overflow-hidden border-b border-ink/10 scroll-mt-24 md:scroll-mt-28">
         <div className="absolute inset-0 bg-[linear-gradient(90deg,#fff_0%,rgba(255,255,255,0.96)_48%,rgba(245,241,233,0.92)_100%)]" />
         <div className="mx-auto grid min-h-[720px] max-w-7xl items-center gap-12 px-5 py-10 sm:px-8 md:grid-cols-[0.86fr_1fr] md:py-14 lg:min-h-[820px] lg:px-10">
           <div className="relative order-2 mx-auto w-full max-w-[29rem] md:order-1 lg:max-w-[34rem]">
@@ -112,7 +97,7 @@ export default async function HomePage() {
             <p className="mt-7 max-w-xl text-lg leading-8 text-charcoal">{content.intro}</p>
 
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <a href="#updates" className="inline-flex justify-center bg-teal px-7 py-4 text-sm font-bold uppercase tracking-[0.08em] text-white transition hover:bg-ink">
+              <a href="#order" className="inline-flex justify-center bg-teal px-7 py-4 text-sm font-bold uppercase tracking-[0.08em] text-white transition hover:bg-ink">
                 {content.primaryCtaLabel}
               </a>
               <a
@@ -125,8 +110,8 @@ export default async function HomePage() {
           </div>
         </div>
         <a
-          href="#books"
-          aria-label="Scroll to book progress"
+          href="#order"
+          aria-label="Scroll to order"
           className="absolute bottom-5 left-1/2 hidden h-9 w-9 -translate-x-1/2 items-center justify-center text-teal md:flex"
         >
           <svg viewBox="0 0 24 24" aria-hidden="true" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.6">
@@ -135,59 +120,7 @@ export default async function HomePage() {
         </a>
       </section>
 
-      <section id="books" className="bg-teal text-white">
-        <div className="mx-auto grid max-w-7xl gap-10 px-5 py-12 sm:px-8 md:grid-cols-[0.68fr_1fr] lg:px-10">
-          <div>
-            <h2 className="font-display text-5xl leading-tight">Coming Soon</h2>
-            <p className="font-display text-3xl leading-tight text-white/92">Pre-launch in progress</p>
-            <p className="mt-5 max-w-md text-base leading-7 text-white/82">
-              The book is being finished with care and intention. Join the list and be the first to know when it launches.
-            </p>
-          </div>
-
-          <div className="self-center">
-            <div className="grid grid-cols-[1fr_auto] items-center gap-5">
-              <div className="h-4 overflow-hidden rounded-sm bg-white/24">
-                <div className="h-full w-full rounded-sm bg-gold" />
-              </div>
-              <p className="font-display text-3xl text-gold">100%</p>
-            </div>
-            <div className="mt-7 grid grid-cols-5 gap-3">
-              {milestones.map((milestone) => (
-                <div key={milestone.label} className="relative pt-7 text-center">
-                  <span className="absolute left-1/2 top-0 h-4 w-4 -translate-x-1/2 rounded-full border border-white bg-teal">
-                    <span className={`mx-auto mt-[3px] block h-2 w-2 rounded-full ${milestone.active ? 'bg-gold' : 'bg-transparent'}`} />
-                  </span>
-                  <p className="text-xs font-semibold sm:text-sm">{milestone.label}</p>
-                  <p className="mt-1 text-[0.68rem] uppercase tracking-[0.08em] text-white/70 sm:text-xs">{milestone.status}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="updates" className="relative overflow-hidden border-b border-ink/10 bg-white">
-        <div className="absolute inset-y-0 right-0 hidden w-1/2 lg:block">
-          <Image src={heroImage} alt="" fill sizes="50vw" className="object-cover object-bottom opacity-35" />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,#fff_0%,rgba(255,255,255,0.62)_42%,rgba(214,163,42,0.58)_100%)]" />
-        </div>
-        <div className="relative mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-8 lg:grid-cols-[0.78fr_1fr] lg:px-10">
-          <div>
-            <h2 className="max-w-lg font-display text-5xl leading-[1.03] sm:text-6xl">Launch Updates</h2>
-            <div className="mt-6 h-px w-20 bg-gold" />
-            <p className="mt-6 max-w-md text-lg leading-8 text-charcoal">
-              Receive updates, launch news, and exclusive content as the book moves closer to launch.
-            </p>
-          </div>
-
-          <div className="self-center border border-ink/10 bg-white/90 p-5 shadow-soft sm:p-7">
-            <NewsletterForm source="booksite-updates" />
-          </div>
-        </div>
-      </section>
-
-      <section id="order" className="border-b border-ink/10 bg-[#fbfaf8]">
+      <section id="order" className="border-b border-ink/10 bg-[#fbfaf8] scroll-mt-24 md:scroll-mt-28">
         <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-8 lg:grid-cols-[0.78fr_1fr] lg:px-10">
           <div>
             <h2 className="max-w-lg font-display text-5xl leading-[1.03] sm:text-6xl">Order Book</h2>
@@ -203,7 +136,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section id="message" className="bg-white px-5 py-16 text-center sm:px-8 lg:px-10">
+      <section id="message" className="bg-white px-5 py-16 text-center scroll-mt-24 sm:px-8 md:scroll-mt-28 lg:px-10">
         <h2 className="font-display text-4xl leading-tight sm:text-5xl">What Readers Are Saying</h2>
         <div className="mx-auto mt-10 grid max-w-6xl gap-10 md:grid-cols-3">
           {quotes.map((quote) => (
@@ -219,7 +152,7 @@ export default async function HomePage() {
         </a>
       </section>
 
-      <section id="movement" className="bg-teal text-white">
+      <section id="movement" className="bg-teal text-white scroll-mt-24 md:scroll-mt-28">
         <div className="grid grid-cols-2 md:grid-cols-4">
           <div className="relative min-h-56">
             <Image src={portraitImage} alt="Speaking with a microphone" fill sizes="(min-width: 768px) 25vw, 50vw" className="object-cover" />
@@ -245,7 +178,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section id="about" className="bg-[#fbfaf8]">
+      <section id="about" className="bg-[#fbfaf8] scroll-mt-24 md:scroll-mt-28">
         <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-8 md:grid-cols-[0.52fr_1fr] lg:px-10">
           <div>
             <h2 className="max-w-xs font-display text-5xl leading-tight">Choosing Joy Means...</h2>
@@ -275,7 +208,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <footer id="contact" className="bg-black text-white">
+      <footer id="contact" className="bg-black text-white scroll-mt-24 md:scroll-mt-28">
         <div className="mx-auto grid max-w-7xl gap-10 px-5 py-12 sm:px-8 md:grid-cols-[1.2fr_0.7fr_0.7fr_1.2fr] lg:px-10">
           <div>
             <Image src={logoImage} alt="DRB Ventures logo" width={96} height={96} className="h-20 w-20 invert" />
@@ -284,9 +217,6 @@ export default async function HomePage() {
           <div>
             <h3 className="text-xs font-bold uppercase tracking-[0.16em] text-gold">Explore</h3>
             <div className="mt-5 grid gap-3 text-sm text-white/78">
-              <a href="#books" className="hover:text-white">
-                Books
-              </a>
               <a href="#about" className="hover:text-white">
                 About
               </a>
@@ -298,22 +228,22 @@ export default async function HomePage() {
           <div>
             <h3 className="text-xs font-bold uppercase tracking-[0.16em] text-gold">Connect</h3>
             <div className="mt-5 grid gap-3 text-sm text-white/78">
-              <a href="#updates" className="hover:text-white">
-                Updates
+              <a href="#order" className="hover:text-white">
+                Order
               </a>
               <a href="#contact" className="hover:text-white">
                 Contact
               </a>
-              <a href="#updates" className="hover:text-white">
-                Join the Launch List
+              <a href="#message" className="hover:text-white">
+                Reader Quotes
               </a>
             </div>
           </div>
           <div>
             <h3 className="text-xs font-bold uppercase tracking-[0.16em] text-gold">Stay Connected</h3>
-            <p className="mt-5 text-sm text-white/78">Get updates and launch news.</p>
-            <a href="#updates" className="mt-5 inline-flex border border-gold px-6 py-3 text-sm font-bold uppercase tracking-[0.08em] text-white transition hover:bg-gold hover:text-ink">
-              Join the Launch List
+            <p className="mt-5 text-sm text-white/78">Reserve your copy and stay connected with the movement.</p>
+            <a href="#order" className="mt-5 inline-flex border border-gold px-6 py-3 text-sm font-bold uppercase tracking-[0.08em] text-white transition hover:bg-gold hover:text-ink">
+              Order the Book
             </a>
           </div>
         </div>
